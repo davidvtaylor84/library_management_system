@@ -1,14 +1,40 @@
 package com.library.example.libraryservice.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="staff")
 public class Staff {
 
-    private String staffFirstName, staffSurname, staffID, staffPassword;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Staff(String staffFirstName, String staffSurname, String staffID, String staffPassword) {
+    @Column(name="firstname")
+    private String staffFirstName;
+
+    @Column(name="surname")
+    private String staffSurname;
+
+    @Column(name="staffID")
+    private String staffID;
+
+    @Column(name="staffPassword")
+    private String staffPassword;
+
+    @ManyToOne
+    @JoinColumn(name = "library_id")
+    private Library library;
+
+    public Staff() {
+    }
+
+    public Staff(String staffFirstName, String staffSurname, String staffID, String staffPassword, Library library) {
         this.staffFirstName = staffFirstName;
         this.staffSurname = staffSurname;
         this.staffID = staffID;
         this.staffPassword = staffPassword;
+        this.library = library;
     }
 
     public String getStaffFirstName() {

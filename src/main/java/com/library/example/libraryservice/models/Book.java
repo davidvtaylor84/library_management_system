@@ -19,30 +19,44 @@ public class Book {
     @Column(name="isbn")
     private String isbn;
 
+    @Column(name="genre")
+    private String genre;
+
     @Column(name="publisher")
     private String publisher;
 
     @Column(name="yearPublished")
     private int publishedYear;
 
-    @Column(name="checkedIn")
-    private Boolean checkedIn;
+    @Column(name="checkedOut")
+    private Boolean checkedOut;
+
+    public Member getBorrowedBy() {
+        return borrowedBy;
+    }
 
     @ManyToOne
-    @JoinColumn(name = "library_id", nullable = false)
+    @JoinColumn(name = "library_id")
     private Library library;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member borrowedBy;
 
     public Book() {
     }
 
-    public Book(String title, String author, String isbn, String publisher, int publishedYear, Boolean checkedIn, Library library) {
+
+    public Book(String title, String author, String isbn, String publisher, String genre, int publishedYear, Boolean checkedOut, Library library, Member borrowedBy) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.publisher = publisher;
+        this.genre = genre;
         this.publishedYear = publishedYear;
-        this.checkedIn = checkedIn;
+        this.checkedOut = false;
         this.library = library;
+        this.borrowedBy = borrowedBy;
     }
 
     public String getTitle() {
@@ -85,11 +99,11 @@ public class Book {
         this.publishedYear = publishedYear;
     }
 
-    public Boolean getCheckedIn() {
-        return checkedIn;
+    public Boolean getCheckedOut() {
+        return checkedOut;
     }
 
-    public void setCheckedIn(Boolean checkedIn) {
-        this.checkedIn = checkedIn;
+    public void setCheckedOut(Boolean checkedOut) {
+        this.checkedOut = checkedOut;
     }
 }

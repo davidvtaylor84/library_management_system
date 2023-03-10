@@ -32,28 +32,31 @@ public class Library {
         this.bookList = new ArrayList<>();
     }
 
+    public void addMember(Member member){
+        membersList.add(member);
+    }
+
+    public void addStaff(Staff staff){
+        staffList.add(staff);
+    }
+
+    public void addBook(Book book){
+        bookList.add(book);
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public List<Member> getMembersList() {
         return membersList;
-    }
-
-    public void setMembersList(List<Member> membersList) {
-        this.membersList = membersList;
     }
 
     public List<Staff> getStaffList() {
         return staffList;
     }
 
-    public void setStaffList(List<Staff> staffList) {
-        this.staffList = staffList;
-    }
-
     public List<Book> getBookList() {
         return bookList;
-    }
-
-    public void setBookList(List<Book> bookList) {
-        this.bookList = bookList;
     }
 }

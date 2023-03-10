@@ -1,9 +1,11 @@
 package com.library.example.libraryservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="members")
@@ -12,15 +14,30 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name="firstname")
     private String firstName;
+    @Column(name="surname")
     private String surname;
+
+    @Column(name="DOB")
     private String DOB;
+
+    @Column(name="address")
     private String address;
+
+    @Column(name="email")
     private String email;
+
+    @Column(name="idNumber")
     private String libraryID;
-    private ArrayList<Book> checkedOutBooks;
-    private ArrayList<Book> borrowHistory;
-    private ArrayList<Book> booksOnHold;
+
+    @JsonIgnoreProperties("member")
+    @OneToMany(mappedBy = "borrowedBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Book> checkedOutBooks;
+
+    @Column(name="notes")
+    private String notes;
 
     @ManyToOne
     @JoinColumn(name = "library_id", nullable = false)
@@ -29,7 +46,8 @@ public class Member {
     public Member() {
     }
 
-    public Member(String firstName, String surname, String DOB, String address, String email, String libraryID, Library library) {
+
+    public Member(String firstName, String surname, String DOB, String address, String email, String libraryID, String notes, Library library) {
         this.firstName = firstName;
         this.surname = surname;
         this.DOB = DOB;
@@ -37,9 +55,16 @@ public class Member {
         this.email = email;
         this.libraryID = libraryID;
         this.checkedOutBooks = new ArrayList<>();
-        this.borrowHistory = new ArrayList<>();
-        this.booksOnHold = new ArrayList<>();
+        this.notes = notes;
         this.library = library;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public String getFirstName() {
@@ -90,27 +115,4 @@ public class Member {
         this.libraryID = libraryID;
     }
 
-    public ArrayList<Book> getCheckedOutBooks() {
-        return checkedOutBooks;
-    }
-
-    public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
-        this.checkedOutBooks = checkedOutBooks;
-    }
-
-    public ArrayList<Book> getBorrowHistory() {
-        return borrowHistory;
-    }
-
-    public void setBorrowHistory(ArrayList<Book> borrowHistory) {
-        this.borrowHistory = borrowHistory;
-    }
-
-    public ArrayList<Book> getBooksOnHold() {
-        return booksOnHold;
-    }
-
-    public void setBooksOnHold(ArrayList<Book> booksOnHold) {
-        this.booksOnHold = booksOnHold;
-    }
 }
